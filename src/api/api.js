@@ -1,28 +1,26 @@
-import axios from 'axios';
+// src/api/api.js (Actualización)
+import axios from "axios";
 
-// CAMBIA ESTO POR LA IP DE TU PC. 
-// Si tu backend corre en el puerto 3000:
-const API_URL = 'http://192.168.0.9:3000'; 
+// RECUERDA: Cambia esto por tu IP local
+const API_URL = "http://192.168.0.9:3000";
 
 const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: API_URL,
+  headers: { "Content-Type": "application/json" },
 });
 
 export const authApi = {
-    // Basado en tu AuthController
-    register: (userData) => api.post('/auth/register', userData),
-    login: (credentials) => api.post('/auth/login', credentials),
+  login: (credentials) => api.post("/auth/login", credentials),
+  // Registro para admin o estudiante
+  register: (userData) => api.post("/auth/register", userData),
 };
 
 export const coursesApi = {
-    // Basado en tu CourseController
-    getAll: () => api.get('/courses'),
-    create: (courseData) => api.post('/courses', courseData),
-    enroll: (enrollData) => api.post('/courses/enroll', { body: enrollData }), // Ojo: tu controller espera { body: ... }
-    unenroll: (enrollData) => api.delete('/courses/enroll', { data: enrollData }),
+  getAll: () => api.get("/courses"),
+  create: (courseData) => api.post("/courses", courseData),
+  // El controller espera { body: { studentId, courseId } }
+  enroll: (enrollData) => api.post("/courses/enroll", enrollData),
+  unenroll: (enrollData) => api.delete("/courses/enroll", { data: enrollData }),
 };
 
 export default api;
