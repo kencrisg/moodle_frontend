@@ -21,6 +21,7 @@ export const coursesApi = {
   // El controller espera { body: { studentId, courseId } }
   enroll: (enrollData) => api.post("/courses/enroll", enrollData),
   unenroll: (enrollData) => api.delete("/courses/enroll", { data: enrollData }),
+  delete: (id) => api.delete(`/courses/${id}`),
 };
 
 export default api;
